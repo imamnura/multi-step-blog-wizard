@@ -93,31 +93,43 @@ export default function HomePage() {
           No Posts Yet. Create your first post!
         </div>
       ) : (
-        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {items.map((p) => (
-            <li
-              key={p.id}
-              className="rounded-xl border p-4 hover:bg-neutral-50"
-            >
-              <Link href={`/post/${p.id}`} className="block">
-                <h3 className="line-clamp-1 text-lg font-semibold">
-                  {p.title}
-                </h3>
-                <p className="mt-1 text-sm text-neutral-600">
-                  by {p.author} • {formatDate(p.createdAt)}
-                </p>
-                <div className="mt-3 flex items-center justify-between text-sm">
-                  <span className="rounded-full border px-2 py-0.5">
-                    {p.category}
-                  </span>
-                </div>
-                <p className="mt-3 line-clamp-3 text-sm text-neutral-700">
-                  {p.summary}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {items.map((p) => (
+              <li
+                key={p.id}
+                className="rounded-xl border p-4 hover:bg-neutral-50"
+              >
+                <Link href={`/post/${p.id}`} className="block">
+                  <h3 className="line-clamp-1 text-lg font-semibold">
+                    {p.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-neutral-600">
+                    by {p.author} • {formatDate(p.createdAt)}
+                  </p>
+                  <div className="mt-3 flex items-center justify-between text-sm">
+                    <span className="rounded-full border px-2 py-0.5">
+                      {p.category}
+                    </span>
+                  </div>
+                  <p className="mt-3 line-clamp-3 text-sm text-neutral-700">
+                    {p.summary}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            className=""
+            total={total}
+            page={current}
+            pageSize={pageSize}
+            onPageChange={setPage}
+            onPageSizeChange={setPageSize}
+            totalPages={totalPages}
+            pageSizeOptions={[4, 6, 8, 12]}
+          />
+        </>
       )}
     </div>
   );
