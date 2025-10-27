@@ -12,13 +12,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -28,4 +21,13 @@ body {
 /* Prose tweaks for Step 4 preview */
 .prose p {
   margin: 0.5rem 0;
+}
+
+/* Theme colors via data attribute */
+:root[data-theme="dark"] body {
+  background: #0a0a0a;
+  color: #f5f5f5;
+}
+:root[data-theme="dark"] .prose {
+  color: #e5e5e5;
 }
