@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@/components/ui/Button";
 import Stepper from "@/components/ui/Stepper";
 import Step1Meta, { step1Schema } from "@/components/steps/Step1Meta";
@@ -36,6 +36,8 @@ const defaultData: WizardData = {
   content: "",
 };
 
+const DRAFT_KEY = "wizard_draft_v1";
+
 export default function Wizard() {
   const { addPost } = usePosts();
   const router = useRouter();
@@ -43,6 +45,29 @@ export default function Wizard() {
   const [data, setData] = useState<WizardData>(defaultData);
   const [success, setSuccess] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // load draft on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        const draft = JSON.parse(raw) as { step: number; data: WizardData };
+        setData(draft.data);
+        setStep(Math.min(4, Math.max(1, draft.step)));
+      }
+    } catch (e) {
+      console.error("Failed to load draft", e);
+    }
+  }, []);
+
+  //autosave whenever data or step changes
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ step, data }));
+    } catch (e) {
+      console.error("Failed to save draft", e);
+    }
+  }, [step, data]);
 
   const patch = (p: Partial<WizardData>) =>
     setData((prev) => ({ ...prev, ...p }));
@@ -97,6 +122,13 @@ export default function Wizard() {
     setSuccess("Blog post created successfully!");
     setData(defaultData);
     router.push("/");
+    sessionStorage.removeItem(DRAFT_KEY);
+  };
+
+  const clearDraft = () => {
+    setData(defaultData);
+    setStep(1);
+    sessionStorage.removeItem(DRAFT_KEY);
   };
 
   return (
@@ -136,15 +168,20 @@ export default function Wizard() {
         )}
         {step === 4 && <Step4Review data={data} />}
 
-        <div className="mt-6 flex items-center justify-between">
-          <Button onClick={onBack} disabled={step === 1} variant="ghost">
-            Back
+        <div className="mt-6 flex items-center justify-between gap-2">
+          <div className="flex gap-2">
+            <Button onClick={onBack} disabled={step === 1} variant="ghost">
+              Back
+            </Button>
+            {step < 4 ? (
+              <Button onClick={onNext}>Next</Button>
+            ) : (
+              <Button onClick={onSubmit}>Submit</Button>
+            )}
+          </div>
+          <Button variant="ghost" onClick={clearDraft} title="Hapus Draft">
+            Clear Draft
           </Button>
-          {step < 4 ? (
-            <Button onClick={onNext}>Next</Button>
-          ) : (
-            <Button onClick={onSubmit}>Submit</Button>
-          )}
         </div>
       </div>
     </div>
