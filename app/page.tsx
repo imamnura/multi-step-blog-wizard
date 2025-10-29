@@ -79,9 +79,9 @@ export default function HomePage() {
         </select>
         <DateRange
           className="md:col-span-5"
-          start={start}
-          end={end}
-          onChange={({ start: s, end: e }) => {
+          startDate={start}
+          endDate={end}
+          onChange={({ startDate: s, endDate: e }) => {
             setStart(s);
             setEnd(e);
           }}
