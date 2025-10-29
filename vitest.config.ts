@@ -1,4 +1,9 @@
 import { defineConfig } from "vitest/config";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const r = (p: string) => resolve(__dirname, p);
 
 export default defineConfig({
   test: {
@@ -34,6 +39,17 @@ export default defineConfig({
       //   branches: 80,
       //   statements: 90,
       // },
+    },
+  },
+  resolve: {
+    alias: {
+      "@": r("./"), // <-- penting: map alias '@' ke root
+      "@/components": r("./components"),
+      "@/context": r("./context"),
+      "@/hooks": r("./hooks"),
+      "@/lib": r("./lib"),
+      "@/types": r("./types"),
+      "@/app": r("./app"),
     },
   },
 });

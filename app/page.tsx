@@ -8,7 +8,6 @@ import DateRange from "@/components/ui/DateRange";
 import Pagination from "@/components/ui/Pagination";
 import { paginate } from "@/lib/paginate";
 import { Category } from "@/types/post";
-import { set } from "zod";
 
 export default function HomePage() {
   const { state } = usePosts();
