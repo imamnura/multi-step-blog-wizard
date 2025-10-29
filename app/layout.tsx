@@ -27,9 +27,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased neutral-bg-white text-black [data-theme=dark]:neutral-bg-black [data-theme=dark]:text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-neutral-900 transition-colors  [data-theme=dark]:bg-black [data-theme=dark]:text-white min-h-screen flex flex-col`}
       >
         <ThemeProvider>
           <PostsProvider>
@@ -55,10 +55,10 @@ export default function RootLayout({
                 </nav>
               </div>
             </header>
-            <main className="mx-auto max-w-5xl p-4 md:p-8 [data-theme=dark]:bg-neutral-900 [data-theme=dark]:text-neutral-100 transition-colors">
+            <main className="flex-1 w-full mx-auto max-w-5xl p-4 md:p-8 [data-theme=dark]:bg-neutral-900 [data-theme=dark]:text-neutral-100 transition-colors">
               {children}
             </main>
-            <footer className="mt-12 border-t p-6 text-center text-sm text-neutral-600 transition-colors [data-theme=dark]:border-neutral-800 [data-theme=dark]:text-neutral-400">
+            <footer className="mt-0 border-t p-6 text-center text-sm text-neutral-600 transition-colors [data-theme=dark]:border-neutral-800 [data-theme=dark]:text-neutral-400">
               © {new Date().getFullYear()} Blog Wizard
             </footer>
           </PostsProvider>
