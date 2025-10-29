@@ -66,10 +66,10 @@ const hello: string = 'world';
       </div>
 
       {/* Preview */}
-      <div className="rounded-xl border p-3 [data-theme:dark]:border-neutral-800">
+      <div className="rounded-xl border p-3 dark:border-neutral-800">
         <h4 className="mb-2 text-sm font-semibold">Preview</h4>
         <div
-          className="prose max-w-none whitespace-pre-wrap [data-theme:dark]:prose-invert"
+          className="prose max-w-none whitespace-pre-wrap dark:prose-invert"
           dangerouslySetInnerHTML={{ __html: sanitized }}
         />
       </div>

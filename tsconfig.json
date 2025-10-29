@@ -27,7 +27,8 @@
       "@/lib/*": ["lib/*"],
       "@/types/*": ["types/*"],
       "@/app/*": ["app/*"]
-    }
+    },
+    "types": ["vitest"]
   },
   "include": [
     "next-env.d.ts",

@@ -24,10 +24,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem(KEY, theme);
-    }
+    const html = document.documentElement;
+    if (theme === "dark") html.classList.add("dark");
+    else html.classList.remove("dark");
+    localStorage.setItem(KEY, theme);
   }, [theme]);
 
   const toggleTheme = () => {

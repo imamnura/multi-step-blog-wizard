@@ -48,7 +48,7 @@ export default function HomePage() {
         <h1 className="text-2xl font-bold">Latest Posts</h1>
         <Link
           href="/new"
-          className="rounded-lg bg-black px-3 py-2 tex-sm text-white hover:opacity-90 [data-theme=dark]:bg-white [data-theme=dark]:text-black"
+          className="rounded-lg bg-black px-3 py-2 tex-sm text-white hover:opacity-90 dark:bg-white dark:text-black"
         >
           Create Posts
         </Link>
@@ -59,12 +59,12 @@ export default function HomePage() {
           placeholder="Cari judul/summary/author..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="md:col-span-5 rounded-xl border border-neutral-300 px-3 py-2 [data-theme=dark]:bg-neutral-900 [data-theme=dark]:border-neutral-700"
+          className="md:col-span-5 rounded-xl border border-neutral-300 px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
         />
         <select
           value={cat}
           onChange={(e) => setCat(e.target.value as any)}
-          className="md:col-span-2 rounded-xl border border-neutral-300 px-3 py-2 [data-theme=dark]:bg-neutral-900 [data-theme=dark]:border-neutral-700"
+          className="md:col-span-2 rounded-xl border border-neutral-300 px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <option value="All">All Categories</option>
           <option value="Tech">Technology</option>

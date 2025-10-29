@@ -32,7 +32,7 @@ export default function DateRange({
           id="startDate"
           value={startDate ?? ""}
           onChange={onStart}
-          className="rounded-xl border border-neutral-300 px-3 py-2 [data-theme=dark]:border-neutral-700"
+          className="rounded-xl border border-neutral-300 px-3 py-2 dark:border-neutral-700"
         />
       </div>
       <div className="flex item-center gap-2">
@@ -44,7 +44,7 @@ export default function DateRange({
           id="endDate"
           value={endDate ?? ""}
           onChange={onEnd}
-          className="rounded-xl border border-neutral-300 px-3 py-2 [data-theme=dark]:border-neutral-700"
+          className="rounded-xl border border-neutral-300 px-3 py-2 dark:border-neutral-700"
         />
       </div>
     </div>

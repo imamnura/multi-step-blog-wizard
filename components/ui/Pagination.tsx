@@ -36,7 +36,7 @@ export default function Pagination({
     <div
       className={`mt-6 flex flex-col items-center gap-4 justify-between sm:flex-row ${className}`}
     >
-      <div className="text-sm text-neutral-600 [data-theme:dark]:text-neutral-400">
+      <div className="text-sm text-neutral-600 dark:text-neutral-400">
         Total {total}
       </div>
       <div className="flex items-center gap-2">
@@ -90,7 +90,7 @@ export default function Pagination({
         <div className="flex items-center gap-2 text-sm">
           <span>Per page</span>
           <select
-            className="rounded-xl border border-neutral-300 px-2 py-1 [data-theme:dark]:bg-neutral-900 [data-theme:dark]:border-neutral-700"
+            className="rounded-xl border border-neutral-300 px-2 py-1 dark:bg-neutral-900 dark:border-neutral-700"
             value={pageSize}
             onChange={(e) => onPageSizeChange(Number(e.target.value))}
           >

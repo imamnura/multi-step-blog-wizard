@@ -1,8 +1,27 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+  }
+
+  body {
+    @apply bg-gray-50 dark:bg-black dark:text-white font-sans antialiased;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @theme inline {
@@ -10,12 +29,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Prose tweaks for Step 4 preview */
@@ -29,13 +42,4 @@ body {
 .prose code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
-}
-
-/* Theme colors via data attribute */
-:root[data-theme="dark"] body {
-  background: #0a0a0a;
-  color: #f5f5f5;
-}
-:root[data-theme="dark"] .prose {
-  color: #e5e5e5;
 }
