@@ -26,9 +26,14 @@ export const step2Schema = z.object({
 
 export type Step2 = z.infer<typeof step2Schema>;
 
+export type Step2Input = {
+  summary: string;
+  category: Step2["category"] | "";
+};
+
 type Props = {
-  data: Step2;
-  onChange: (p: Partial<Step2>) => void;
+  data: Step2Input;
+  onChange: (p: Partial<Step2Input>) => void;
   errors: Partial<Record<keyof Step2, string>>;
 };
 
@@ -49,7 +54,9 @@ export default function Step2Summary({ data, onChange, errors }: Props) {
         <label className="mb-1 block text-sm">Blog Category</label>
         <Select
           value={data.category}
-          onChange={(e) => onChange({ category: e.target.value as any })}
+          onChange={(e) =>
+            onChange({ category: e.target.value as Step2Input["category"] })
+          }
         >
           <option value="">Select a category</option>
           <option value="Tech">Tech</option>

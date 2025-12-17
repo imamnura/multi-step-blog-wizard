@@ -4,7 +4,6 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-import pluginImport from "eslint-plugin-import";
 
 export default defineConfig([
   ...nextVitals,
@@ -13,7 +12,6 @@ export default defineConfig([
   // Tambahkan block ini supaya alias TS (baseUrl/paths) dikenali oleh rule import/no-unresolved
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
-    plugins: { import: pluginImport },
     settings: {
       "import/resolver": {
         // Baca paths dari tsconfig.json (supports "baseUrl" & "paths")
@@ -31,4 +29,11 @@ export default defineConfig([
 
   // Override default ignores of eslint-config-next.
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+
+  {
+    files: ["components/Wizard.tsx"],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);

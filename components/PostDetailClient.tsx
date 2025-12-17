@@ -1,22 +1,20 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import type { Post } from "@/types/post";
 import Button from "@/components/ui/Button";
 
 export default function PostPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const [post, setPost] = useState<Post | null>(null);
-
-  useEffect(() => {
+  const post = useMemo(() => {
     try {
       const raw = localStorage.getItem("blog-wizard-posts");
       const list = raw ? (JSON.parse(raw) as Post[]) : [];
-      setPost(list.find((x) => x.id === id) ?? null);
+      return list.find((x) => x.id === id) ?? null;
     } catch {
-      setPost(null);
+      return null;
     }
   }, [id]);
 

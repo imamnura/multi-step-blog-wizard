@@ -14,10 +14,10 @@ describe("Button component", () => {
     const fn = vi.fn();
     render(
       <Button onClick={fn} disabled>
-        Can't Click Me
+        Can’t Click Me
       </Button>
     );
-    fireEvent.click(screen.getByText("Can't Click Me"));
+    fireEvent.click(screen.getByText("Can’t Click Me"));
     expect(fn).toHaveBeenCalledTimes(0);
   });
 });

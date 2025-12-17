@@ -5,7 +5,6 @@ import { z } from "zod";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { useMemo } from "react";
-import { ca } from "zod/locales";
 
 export const step3Schema = z.object({
   content: z.string().min(50, "Content must be at least 50 characters"),

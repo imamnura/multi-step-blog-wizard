@@ -37,6 +37,7 @@ const defaultData: WizardData = {
 };
 
 const DRAFT_KEY = "wizard_draft_v1";
+const LAST_KEY = "wizard_last_v1";
 
 export default function Wizard() {
   const { addPost } = usePosts();
@@ -46,21 +47,31 @@ export default function Wizard() {
   const [success, setSuccess] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // load draft on mount
+  // hydrate from storage on mount
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(DRAFT_KEY);
+      const raw = sessionStorage.getItem(DRAFT_KEY);
       if (raw) {
         const draft = JSON.parse(raw) as { step: number; data: WizardData };
-        setData(draft.data);
         setStep(Math.min(4, Math.max(1, draft.step)));
+        setData(draft.data);
+        return;
       }
-    } catch (e) {
-      console.error("Failed to load draft", e);
-    }
+    } catch {}
+    try {
+      const lastRaw = localStorage.getItem(LAST_KEY);
+      if (lastRaw) {
+        const last = JSON.parse(lastRaw) as Partial<WizardData>;
+        setData((prev) => ({
+          ...prev,
+          author: last.author ?? "",
+          category: (last.category as WizardData["category"]) ?? "",
+        }));
+      }
+    } catch {}
   }, []);
 
-  //autosave whenever data or step changes
+  // autosave whenever data or step changes
   useEffect(() => {
     try {
       sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ step, data }));
@@ -84,9 +95,14 @@ export default function Wizard() {
       if (step === 3) step3Schema.parse({ content: data.content });
       setErrors({});
       return true;
-    } catch (e: any) {
+    } catch (err) {
       const fieldErrors: Record<string, string> = {};
-      e.issues?.forEach((i: any) => (fieldErrors[i.path[0]] = i.message));
+      if (err instanceof z.ZodError) {
+        err.issues.forEach((i) => {
+          const key = String(i.path[0] ?? "");
+          fieldErrors[key] = i.message;
+        });
+      }
       setErrors(fieldErrors);
       return false;
     }
@@ -119,6 +135,9 @@ export default function Wizard() {
       createdAt: new Date().toISOString(),
     };
     addPost(newPost);
+    try {
+      localStorage.setItem(LAST_KEY, JSON.stringify({ author, category }));
+    } catch {}
     setSuccess("Blog post created successfully!");
     setData(defaultData);
     router.push("/");
@@ -153,7 +172,7 @@ export default function Wizard() {
           <Step2Summary
             data={{
               summary: data.summary,
-              category: (data.category as any) || "",
+              category: data.category || "",
             }}
             onChange={patch}
             errors={{ summary: errors.summary, category: errors.category }}

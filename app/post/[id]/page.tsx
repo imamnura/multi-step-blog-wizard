@@ -1,10 +1,10 @@
 import type { Post } from "@/types/post";
 import PostDetailClient from "@/components/PostDetailClient";
 
-type Params = { params: { id: string } };
+type Params = { params: Promise<{ id: string }> };
 
 export async function generateMetadata({ params }: Params) {
-  const { id } = params;
+  const { id } = await params;
   let title = "Post Not Found";
   let description = `Read the blog post ${id} created with the wizard.`;
 

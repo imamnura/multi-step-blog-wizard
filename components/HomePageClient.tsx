@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePosts } from "@/context/PostsContext";
 import { formatDate, isWithinDateRange } from "@/lib/date";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import DateRange from "@/components/ui/DateRange";
 import Pagination from "@/components/ui/Pagination";
 import { paginate } from "@/lib/paginate";
@@ -18,10 +18,7 @@ export default function HomePage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
 
-  //reset page saat filter berubah
-  useEffect(() => {
-    setPage(1);
-  }, [q, cat, start, end, pageSize]);
+  // Reset page in event handlers when filters change
 
   const filteredPosts = useMemo(() => {
     const lower = q.trim().toLowerCase();
@@ -58,12 +55,18 @@ export default function HomePage() {
         <input
           placeholder="Cari judul/summary/author..."
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => {
+            setQ(e.target.value);
+            setPage(1);
+          }}
           className="md:col-span-5 rounded-xl border border-neutral-300 px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
         />
         <select
           value={cat}
-          onChange={(e) => setCat(e.target.value as any)}
+          onChange={(e) => {
+            setCat(e.target.value as Category | "All");
+            setPage(1);
+          }}
           className="md:col-span-2 rounded-xl border border-neutral-300 px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
         >
           <option value="All">All Categories</option>
@@ -83,6 +86,7 @@ export default function HomePage() {
           onChange={({ startDate: s, endDate: e }) => {
             setStart(s);
             setEnd(e);
+            setPage(1);
           }}
         />
       </div>
@@ -124,7 +128,10 @@ export default function HomePage() {
             page={current}
             pageSize={pageSize}
             onPageChange={setPage}
-            onPageSizeChange={setPageSize}
+            onPageSizeChange={(n) => {
+              setPageSize(n);
+              setPage(1);
+            }}
             totalPages={totalPages}
             pageSizeOptions={[4, 6, 8, 12]}
           />
