@@ -47,7 +47,7 @@
     "eslint-plugin-storybook": "^10.0.0",
     "jsdom": "^27.0.1",
     "playwright": "link:@vitest/browser/providers/playwright",
-    "storybook": "^10.0.0",
+    "storybook": "^10.1.10",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "typescript": "^5",
